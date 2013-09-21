@@ -50,4 +50,10 @@ export PATH=${PREFIX}/bin:${PATH}
     cabal update
     cabal install --global --only-dependencies --prefix="${PREFIX}" )
 )
+if [ -e "${PREFIX}/share" ]; then
+  rm -rf "${PREFIX}/share"
+fi
+find "${PREFIX}" -exec strip -p --strip-unneeded --remove-section=.comment {} \;
+find "${PREFIX}" -name html -exec rm -rf {} \;
+find "${PREFIX}" -name latex -exec rm -rf {} \;
 sudo chmod ugo+rX -R "${PREFIX}"
